@@ -1,0 +1,18 @@
+# EXAMPLE USAGE:
+#
+#   Refer for explanation to following link:
+#   https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
+
+pre-commit:
+  commands:
+    1_analyzer:
+      run: flutter analyze
+    2_linter:
+      run: dart fix --apply
+
+pre-push:
+  commands:
+    1_analyzer:
+      run: flutter analyze
+    2_linter:
+      run: dart fix --apply
