@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  group('WidgetTest', () {
   testWidgets("対象のKeyにテキストがあるか？", (WidgetTester tester) async{
     await tester.pumpWidget(MaterialApp(home: const TextPage()));
 
     expect(find.byKey(TextPage.messageKey), findsOneWidget);
     expect(find.text("こんにちは TextPage"), findsOneWidget);
+  });
   });
 }
