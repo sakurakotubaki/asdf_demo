@@ -1,8 +1,11 @@
-import 'package:asdf_demo/ui/text_field/text_field_page.dart';
+import 'package:asdf_demo/mvi/counter_mvi.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(child: MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const TextFieldPage(),
+      home: const CounterMviPage(),
     );
   }
 }
