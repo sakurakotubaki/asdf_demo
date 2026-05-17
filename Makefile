@@ -18,3 +18,12 @@ test-coverage:
 # HTMLカバレッジレポートを生成
 test-coverage-html: test-coverage
 	genhtml coverage/lcov.info -o coverage/html
+
+.PHONY: setup
+setup:
+	flutter clean
+	flutter pub get
+
+.PHONY: watch
+watch:
+	flutter pub run build_runner watch --delete-conflicting-outputs
