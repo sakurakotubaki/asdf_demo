@@ -8,20 +8,13 @@ part of 'generic_provider_sample.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// 内容は、numberPairProvider<int>(...) / numberPairProvider<double>(...) のように
-/// watch 時に型引数を渡すサンプルです。Ref は Riverpod 3 系の統一 API として直接使っています。
 
 @ProviderFor(numberPair)
 final numberPairProvider = NumberPairFamily._();
 
-/// 内容は、numberPairProvider<int>(...) / numberPairProvider<double>(...) のように
-/// watch 時に型引数を渡すサンプルです。Ref は Riverpod 3 系の統一 API として直接使っています。
-
 final class NumberPairProvider<T extends num>
     extends $FunctionalProvider<List<T>, List<T>, List<T>>
     with $Provider<List<T>> {
-  /// 内容は、numberPairProvider<int>(...) / numberPairProvider<double>(...) のように
-  /// watch 時に型引数を渡すサンプルです。Ref は Riverpod 3 系の統一 API として直接使っています。
   NumberPairProvider._({
     required NumberPairFamily super.from,
     required (T, T) super.argument,
@@ -81,9 +74,6 @@ final class NumberPairProvider<T extends num>
 
 String _$numberPairHash() => r'6d46cf74dd950d2c4d807cefa30516572effd3d8';
 
-/// 内容は、numberPairProvider<int>(...) / numberPairProvider<double>(...) のように
-/// watch 時に型引数を渡すサンプルです。Ref は Riverpod 3 系の統一 API として直接使っています。
-
 final class NumberPairFamily extends $Family {
   NumberPairFamily._()
     : super(
@@ -93,9 +83,6 @@ final class NumberPairFamily extends $Family {
         $allTransitiveDependencies: null,
         isAutoDispose: true,
       );
-
-  /// 内容は、numberPairProvider<int>(...) / numberPairProvider<double>(...) のように
-  /// watch 時に型引数を渡すサンプルです。Ref は Riverpod 3 系の統一 API として直接使っています。
 
   NumberPairProvider<T> call<T extends num>(T first, T second) =>
       NumberPairProvider<T>._(argument: (first, second), from: this);

@@ -1,3 +1,5 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart'
+    as secure_storage;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart' as shared_prefs;
 
@@ -100,6 +102,33 @@ final class SharedPreferencesTypedStorage implements TypedStorage {
   }
 }
 
+final class SecureTypedStorage implements TypedStorage {
+  SecureTypedStorage({secure_storage.FlutterSecureStorage? storage})
+    : _storage = storage ?? const secure_storage.FlutterSecureStorage();
+
+  final secure_storage.FlutterSecureStorage _storage;
+
+  @override
+  Future<T?> read<T extends Object>(StorageKey<T> key) async {
+    final value = await _storage.read(key: key.name);
+    if (value == null) {
+      return null;
+    }
+
+    return key.codec.decode(value);
+  }
+
+  @override
+  Future<void> write<T extends Object>(StorageKey<T> key, T value) {
+    return _storage.write(key: key.name, value: key.codec.encode(value));
+  }
+
+  @override
+  Future<void> delete<T extends Object>(StorageKey<T> key) {
+    return _storage.delete(key: key.name);
+  }
+}
+
 final class StorageKeys {
   const StorageKeys._();
 
@@ -116,4 +145,37 @@ final class StorageKeys {
 @riverpod
 TypedStorage typedStorage(Ref ref) {
   return SharedPreferencesTypedStorage();
+}
+
+@riverpod
+TypedStorage secureTypedStorage(
+  Ref ref, {
+  String? storageNamespace,
+  String? preferencesKeyPrefix,
+  bool enforceBiometrics = false,
+  bool migrateWithBackup = false,
+  String? biometricPromptTitle,
+  String? biometricPromptSubtitle,
+}) {
+  final androidOptions = enforceBiometrics
+      ? secure_storage.AndroidOptions.biometric(
+          enforceBiometrics: enforceBiometrics,
+          migrateWithBackup: migrateWithBackup,
+          preferencesKeyPrefix: preferencesKeyPrefix,
+          storageNamespace: storageNamespace,
+          biometricPromptTitle: biometricPromptTitle,
+          biometricPromptSubtitle: biometricPromptSubtitle,
+        )
+      : secure_storage.AndroidOptions(
+          enforceBiometrics: enforceBiometrics,
+          migrateWithBackup: migrateWithBackup,
+          preferencesKeyPrefix: preferencesKeyPrefix,
+          storageNamespace: storageNamespace,
+          biometricPromptTitle: biometricPromptTitle,
+          biometricPromptSubtitle: biometricPromptSubtitle,
+        );
+
+  return SecureTypedStorage(
+    storage: secure_storage.FlutterSecureStorage(aOptions: androidOptions),
+  );
 }
